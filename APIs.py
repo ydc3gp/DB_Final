@@ -161,16 +161,19 @@ def update_laundry_device(machine_id):
 @app.route('/Users/<string:username>', methods=['PUT'])
 def update_user(username):
     data = request.json
-    try:
+    try:        
         query = """
         UPDATE Users 
-        SET profile_picture = ?, email = ?, password = ?, phone_number = ? 
+        SET email = ?, password = ?, phone_number = ? 
         WHERE username = ?
         """
-        execute_query(query, (data['profile_picture'], data['email'], data['password'], data['phone_number'], username))
+        params = (data['email'], data['password'], data['phone_number'], username)
+        
+        execute_query(query, params)
         return jsonify({"message": f"User {username} updated successfully."})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 @app.route('/DryerHistory/<int:dryer_id>', methods=['PUT'])
 def update_dryer_history(dryer_id):
@@ -279,19 +282,20 @@ def create_laundry_device():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/Users', methods=['POST'])
-def create_user():
+@app.route('/Users/<string:username>', methods=['POST'])
+def create_user(username):
     """Create a new User record."""
     data = request.json
     try:
         query = """
-        INSERT INTO Users (profile_picture, email, password, username, phone_number) 
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO Users (email, password, username, phone_number) 
+        VALUES (?, ?, ?, ?)
         """
-        execute_query(query, (data['profile_picture'], data['email'], data['password'], data['username'], data['phone_number']))
-        return jsonify({"message": f"User {data['username']} created successfully."})
+        execute_query(query, (data['email'], data['password'], username, data['phone_number']))
+        return jsonify({"message": f"User {username} created successfully."})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 @app.route('/DryerHistory', methods=['POST'])
@@ -304,8 +308,6 @@ def create_dryer_history():
         return jsonify({"message": "DryerHistory record created successfully."})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

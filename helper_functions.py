@@ -15,14 +15,13 @@ def calculate_end_time(dryer_id):
     """
     # Define durations for each temperature setting
     temp_durations = {
-        "Low": 30,         # 30 minutes
-        "Medium": 45,      # 45 minutes
-        "High": 60,        # 60 minutes
-        "No heat": 20      # 20 minutes
+        "Low": 30,         
+        "Medium": 45,     
+        "High": 60,        
+        "No heat": 20      
     }
 
     try:
-        # Fetch the dryer history record for the given dryer ID
         response = requests.get(f"{BASE_URL}/DryerHistory")
         if response.status_code != 200:
             return {"error": "Failed to fetch dryer history"}
@@ -75,9 +74,7 @@ def is_active_user(username):
             return True
 
     for payment in payments:
-        # Check if the payment belongs to the user
-        # (Requires mapping payments to user via `Uses`)
-        pass  # Add logic if required
+        pass  
 
     return False
 

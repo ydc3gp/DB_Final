@@ -1,7 +1,7 @@
 import requests
 import json
 
-BASE_URL = "http://127.0.0.1:5000"  # Update this URL if your Flask app runs on a different host or port
+BASE_URL = "http://127.0.0.1:5000"  
 
 
 def get_users():
@@ -172,7 +172,6 @@ def delete_dryer_history(dryer_id):
 
 
 
-# Example usage:
 if __name__ == "__main__":
     # Test fetching users
     print("Users:", get_users())
